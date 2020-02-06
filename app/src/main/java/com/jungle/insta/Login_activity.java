@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -51,28 +53,44 @@ public class Login_activity extends AppCompatActivity {
                 user_pass= password.getText().toString();
 
 
-                ParseQuery<ParseObject> userlogin= ParseQuery.getQuery("Fake_user");
-                userlogin.whereEqualTo("name",user_name);
-                userlogin.getFirstInBackground(new GetCallback<ParseObject>() {
+                ParseUser.logInInBackground(user_name,user_pass, new LogInCallback() {
                     @Override
-                    public void done(ParseObject object, ParseException e) {
-                        if (object!=null && e==null){
-                            if (object.get("password").toString().equals(user_pass)){
-                                Intent intent = new Intent(Login_activity.this,Home.class);
-                                intent.putExtra("user",user_name);
+                    public void done(ParseUser user, ParseException e) {
+                   if (user!=null){
+                       Intent intent = new Intent(Login_activity.this,Home.class);
+//                                intent.putExtra("user",user_name);
                                 startActivity(intent);
 
-
-                            }else{
-                                Toast.makeText(Login_activity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }else{
-                            Toast.makeText(Login_activity.this, "User Dosen't Exist", Toast.LENGTH_SHORT).show();
-                        }
-
+                   }else{
+                       Toast.makeText(Login_activity.this, "Wrong Password"+e, Toast.LENGTH_SHORT).show();
+                   }
                     }
                 });
+
+//*********************************************Another way to log in and get data from Parse server **************************************************************
+//                ParseQuery<ParseObject> userlogin= ParseQuery.getQuery("Fake_user");
+//                userlogin.whereEqualTo("name",user_name);
+//                userlogin.getFirstInBackground(new GetCallback<ParseObject>() {
+//                    @Override
+//                    public void done(ParseObject object, ParseException e) {
+//                        if (object!=null && e==null){
+//                            if (object.get("password").toString().equals(user_pass)){
+//                                Intent intent = new Intent(Login_activity.this,Home.class);
+//                                intent.putExtra("user",user_name);
+//                                startActivity(intent);
+//
+//
+//                            }else{
+//                                Toast.makeText(Login_activity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        }else{
+//                            Toast.makeText(Login_activity.this, "User Dosen't Exist", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                    }
+//                });
+      //****************************************************************************************************************************
 //                userlogin.findInBackground(new FindCallback<ParseObject>() {
 //                    @Override
 //                    public void done(List<ParseObject> objects, ParseException e) {
