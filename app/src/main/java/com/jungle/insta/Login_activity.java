@@ -68,7 +68,7 @@ public class Login_activity extends AppCompatActivity {
                 user_pass= password.getText().toString();
 
 
-                if (user_name =="" || user_pass==""){
+                if (user_name.equals("") || user_pass.equals("")){
                     Toast.makeText(Login_activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
                 }else{
                     ParseUser.logInInBackground(user_name,user_pass, new LogInCallback() {
@@ -77,10 +77,12 @@ public class Login_activity extends AppCompatActivity {
                             if (user!=null){
                                 Intent intent = new Intent(Login_activity.this,Home.class);
 //                                intent.putExtra("user",user_name);
-                                startActivity(intent);
 
+                                startActivity(intent);
+                                //*****************animation when witch activity*********************
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             }else{
-                                Toast.makeText(Login_activity.this, "Wrong Password"+e, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login_activity.this, "Wrong Password "+e, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
