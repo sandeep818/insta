@@ -2,6 +2,7 @@ package com.jungle.insta;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,5 +20,13 @@ public class Home extends AppCompatActivity {
 //        Intent intent = getIntent();
 //        String str = intent.getStringExtra("user");
         wlcm.setText("Wellcome Back "+ ParseUser.getCurrentUser().getUsername().toString());
+
+        findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                finish();
+            }
+        });
     }
 }

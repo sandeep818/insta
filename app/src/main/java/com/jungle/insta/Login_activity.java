@@ -2,7 +2,9 @@ package com.jungle.insta;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,11 +34,24 @@ public class Login_activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_leyout);
+        setTitle("Log In");
 
         login = findViewById(R.id.log_in);
         signup = findViewById(R.id.sign_up);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        password.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+                    login.performClick();
+                }
+
+
+                return false;
+            }
+        });
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,19 +68,23 @@ public class Login_activity extends AppCompatActivity {
                 user_pass= password.getText().toString();
 
 
-                ParseUser.logInInBackground(user_name,user_pass, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                   if (user!=null){
-                       Intent intent = new Intent(Login_activity.this,Home.class);
+                if (user_name =="" || user_pass==""){
+                    Toast.makeText(Login_activity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+                }else{
+                    ParseUser.logInInBackground(user_name,user_pass, new LogInCallback() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            if (user!=null){
+                                Intent intent = new Intent(Login_activity.this,Home.class);
 //                                intent.putExtra("user",user_name);
                                 startActivity(intent);
 
-                   }else{
-                       Toast.makeText(Login_activity.this, "Wrong Password"+e, Toast.LENGTH_SHORT).show();
-                   }
-                    }
-                });
+                            }else{
+                                Toast.makeText(Login_activity.this, "Wrong Password"+e, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
 
 //*********************************************Another way to log in and get data from Parse server **************************************************************
 //                ParseQuery<ParseObject> userlogin= ParseQuery.getQuery("Fake_user");
@@ -115,5 +134,14 @@ public class Login_activity extends AppCompatActivity {
 //                });
             }
         });
+    }
+    public void  root_tapped( View view){
+        try{
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }
