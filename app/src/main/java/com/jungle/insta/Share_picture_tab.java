@@ -92,7 +92,7 @@ public class Share_picture_tab extends Fragment implements View.OnClickListener 
                         byte[] bytes = byteArrayOutputStream.toByteArray();
                         ParseFile parseFile = new ParseFile("img.png", bytes);
                         ParseObject parseObject = new ParseObject("Photo");
-                        parseObject.put("picture", parseFile);
+                        parseObject.put("image", parseFile);
                         parseObject.put("image_des", description.getText().toString());
                         parseObject.put("username", ParseUser.getCurrentUser().getUsername());
                         final ProgressDialog dialog = new ProgressDialog(getContext());

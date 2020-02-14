@@ -57,6 +57,7 @@ public class Login_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Login_activity.this,Sign_up_activity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -81,6 +82,7 @@ public class Login_activity extends AppCompatActivity {
                                 startActivity(intent);
                                 //*****************animation when witch activity*********************
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                finish();
                             }else{
                                 Toast.makeText(Login_activity.this, "Wrong Password "+e, Toast.LENGTH_SHORT).show();
                             }

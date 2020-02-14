@@ -15,6 +15,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -35,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
         gettext = findViewById(R.id.gettext);
         getall = findViewById(R.id.getall);
         switch_activity = findViewById(R.id.switch_activity);
+        if(ParseUser.getCurrentSessionToken()!= null){
+
+            Toast.makeText(this, "log in  : "+ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,Home.class);
+            startActivity(intent);
+
+        }
 
         switch_activity.setOnClickListener(new View.OnClickListener() {
             @Override

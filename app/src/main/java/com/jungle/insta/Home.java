@@ -84,6 +84,9 @@ public class Home extends AppCompatActivity {
 
 
             Toast.makeText(this, "ok im here!", Toast.LENGTH_SHORT).show();
+        }else if(item.getItemId()== R.id.logout){
+            ParseUser.logOut();
+            finish();
         }
 
 

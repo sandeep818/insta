@@ -78,6 +78,7 @@ public class Sign_up_activity extends AppCompatActivity{
                                        // Magic here
                                        Intent intent = new Intent(Sign_up_activity.this,Login_activity.class);
                                        startActivity(intent);
+                                       finish();
                                    }
                                }, 2000); // Millisecond 1000 = 1 sec
 
